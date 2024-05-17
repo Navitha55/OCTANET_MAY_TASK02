@@ -1,0 +1,149 @@
+<html>
+<head>
+	<title>TO DO LIST</title>
+    <style>
+		body
+		{
+            background-image: url("C:/Users/navit/RTP/todo.png");
+			background-repeat:no-repeat;
+			background-position:right;
+			background-color: antiquewhite;
+			background-size: cover;
+		}
+		h1
+		{
+			text-indent: 70px;
+			margin-top: 50px;
+			color:seagreen;
+			
+		}
+        fieldset
+		{
+			position: left;
+			margin-right:17cm;
+			margin-left:20px;
+			padding-top: 20px;
+			padding-bottom: 20px;
+			background-color:cornsilk;
+			color:red ;
+			border-radius: 15px;
+		}
+		button
+        {
+            position:relative;
+            color:green;
+            padding: 10px;
+            border-radius: 10px;
+            background-color:lightcyan;
+                
+        }
+		.del-btn
+		{
+			margin-left:200px;
+			color:red;
+            padding: 4px;
+			font-size: 15px;
+            border-radius: 10px;
+            background-color:whitesmoke;
+		}
+		.list li::before
+		{
+			content:'🔲';
+			font-size: 16px;
+		}
+		.list li.checked::before
+		{
+			content: '☑️';
+			font-size: 16px;
+		}
+		.list li.checked
+		{
+			text-decoration: line-through;
+		}
+	</style>
+</head>
+
+<body>
+    <h1>MY TO-DO LIST...!</h1>
+	<h3><br>
+		<fieldset>
+			<legend style="background-color:lightgray;">Set Time</legend>
+			<label for="date">Set Due date:</label>
+			<input id="ip-date" type="date">
+			<button id="btn-date">SET</button><br><br>
+		</fieldset><br>
+		<fieldset>
+            <legend style="background-color:lightgrey;">Task To Do</legend>
+			<input id="ip-task" type="text" placeholder="Enter your task...!">
+   			<button id="btn-add">ADD</button>	
+		</fieldset>
+		<ul class="list">
+			<!--<li>task1<span class='del-btn'>Delete</span></li>
+			<li class="checked">task2<span class='del-btn'>Delete</span></li>-->
+		</ul>
+	</h3>
+  </div>
+  <script>
+	let allLists = document.querySelector('.list');
+	let creatlistDate = document.getElementById('ip-date');
+	let creatlistTask = document.getElementById('ip-task');
+	let addBtn = document.getElementById('btn-add');
+	let dateBtn = document.getElementById('btn-date');
+	dateBtn.addEventListener('click',function()
+	{
+		if(creatlistDate.value ===" ")
+		{
+			alert("Enter date..!");
+		}
+		else
+		{
+			alert("Date Entered..!");
+		}
+	})
+	addBtn.addEventListener('click',function()
+	{
+		if(creatlistTask.value ===" ")
+		{
+			alert("Enter today task..!");
+		}
+		else
+		{
+			let lt = document.createElement('li');
+			lt.innerText = creatlistTask.value;
+
+			let spanbtn = document.createElement('span');
+			spanbtn.className = 'del-btn';
+			spanbtn.innerText = 'Delete';
+			lt.appendChild(spanbtn);
+
+			allLists.appendChild(lt);
+			creatlistTask.value =" ";
+		}
+		savePresentData();
+	});	
+	allLists.addEventListener('click',function(e) 
+	{
+		console.log(e);
+		if(e.target.tagName === 'LI')
+		{
+			e.target.classList.toggle('checked');
+			savePresentData();
+		}
+		else if(e.target.tagName === 'SPAN')
+		{
+			e.target.parentElement.remove();
+			savePresentData();
+		}
+	});
+	function savePresentData()
+	{
+		localStorage.setItem('data',allLists.innerHTML);
+	}
+	function showData()
+	{
+		allLists.innerHTML = localStorage.getItem('data');
+	}
+	showData();
+  </script>
+</body> 
+</html>
